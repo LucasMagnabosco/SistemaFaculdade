@@ -16,6 +16,7 @@ public class Projeto implements Serializable{
 	private String dataFinal;
 	
 	private ArrayList<Pesquisador> pesquisadores = new ArrayList<>();
+	private ArrayList<Financiamento> financiamentos = new ArrayList<>();
 
 	public Projeto(String titulo, String descricao, String dataini, String datafim) {
 		this.titulo = titulo;
@@ -62,6 +63,12 @@ public class Projeto implements Serializable{
 	
 	public ArrayList<Pesquisador> ListarPesquisadores() {
 		return pesquisadores;
+	}
+	public void addFinanci(Financiamento f) {
+		financiamentos.add(f);
+	}
+	public ArrayList<Financiamento> getFinanciamento(){
+		return financiamentos;
 	}
 	
 	public boolean Data() {

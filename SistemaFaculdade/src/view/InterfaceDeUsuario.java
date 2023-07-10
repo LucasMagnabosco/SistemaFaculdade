@@ -8,6 +8,8 @@ import model.Dados;
 import model.Persistencia;
 import model.Pesquisador;
 import model.Projeto;
+import model.Instituicao;
+import model.Financiamento;
 
 public class InterfaceDeUsuario{
 	
@@ -40,10 +42,13 @@ public class InterfaceDeUsuario{
 			System.out.println("1. Cadastrar pesquisador.");
 			System.out.println("2. Cadastrar projeto.");
 			System.out.println("3. Cadastrar artigo.");
-			System.out.println("4. Listar pesquisadores de uma universidade.");
-			System.out.println("5. Listar autores de um artigo.");
-			System.out.println("6. Listar projetos de um autor.");
-			System.out.println("7. Listar projetos ja finalizados.");
+			System.out.println("4. Cadastrar instituicao");
+			System.out.println("5. Cadastrar financiamento");
+			System.out.println("6. Listar pesquisadores de uma universidade.");
+			System.out.println("7. Listar autores de um artigo.");
+			System.out.println("8. Listar projetos de um autor.");
+			System.out.println("9. Listar projetos ja finalizados.");
+			System.out.println("10. Listar financiamentos de uma empresa");
 			
 			opcao = entrada.nextInt();
 
@@ -147,8 +152,54 @@ public class InterfaceDeUsuario{
                     System.out.println("Artigo cadastrado com sucesso !!!");
 
                     break;
-
+                    
 				case 4:
+					entrada.nextLine();
+					System.out.println("Insira o nome da instituicao");
+					nome = entrada.nextLine();
+					System.out.println("Insira o cnpj da empresa");
+					String cnpj = entrada.nextLine();
+					Instituicao ins = new Instituicao(nome, cnpj);
+					dados.addInstituicoes(ins);
+					System.out.println("Instituicao cadastrada com sucesso");
+
+					break;
+					
+				case 5:
+					entrada.nextLine();
+					System.out.println("Insira o nome da instituicao cadastrada que fez o fincanciamento:");
+					nome = entrada.nextLine();
+					Instituicao inst = null;
+					Projeto projt = null;
+					for(int i=0; i<dados.getInstituicoes().size(); i++){
+						if(nome.equalsIgnoreCase(dados.getInsti(i).getNome())) {
+							inst = dados.getInsti(i);
+						}
+					}
+					System.out.println("Insira o titulo do projeto que vai receber o financiamento");
+		            nome = entrada.nextLine();
+		            for(int i=0; i<dados.getProjetos().size();i++) {
+		            	if(nome.equalsIgnoreCase(dados.getProj(i).getTitulo())) {
+		            		projt = dados.getProj(i);
+		            	}
+		            }
+		                
+					if(inst == null) {
+						System.out.println("A instituicao inserida nao esta cadastrada no sistema");
+					}else if(projt==null) {
+						System.out.println("O projeto inserido nao esta cadastrado no sistema");
+					}else {
+						System.out.println("Insira a descricao para o financiamento");
+						descricao = entrada.nextLine();
+						System.out.println("Qual o valor passado?");
+						double valor = entrada.nextDouble();
+						Financiamento f = new Financiamento(descricao, valor);
+						inst.addFinanciamento(f);
+						projt.addFinanci(f);
+					}
+					break;
+
+				case 6:
                     entrada.nextLine();
                     System.out.println("Digite o nome da Universidade:");
                     nome = entrada.nextLine();
@@ -164,7 +215,7 @@ public class InterfaceDeUsuario{
 
                     break;
 
-				case 5:
+				case 7:
 					entrada.nextLine();
 					System.out.println("Digite o Titulo do artigo:");
 					nome = entrada.nextLine();
@@ -187,9 +238,9 @@ public class InterfaceDeUsuario{
 						System.out.println();
 					}
 
-				break;
+					break;
 
-				case 6:
+				case 8:
 	                entrada.nextLine();
 	                System.out.println("Qual o nome do autor que deseja ?");
 	                nome = entrada.nextLine();
@@ -199,14 +250,20 @@ public class InterfaceDeUsuario{
 	                    if(nome.equalsIgnoreCase(dados.getPesq(i).getNome())){
 	                        resp = dados.getPesq(i).ListarProjetos();
 	                    }
+	                    
 	                }
-	                System.out.println("Projetos de " + nome + ":");
-	                for(String i : resp){
-	                    System.out.println(i);
-	                }
-	            break;
+	                if(resp!=null) {
+	                	System.out.println("Projetos de " + nome + ":");
+	                	for(String proj : resp){
+	                		System.out.println(proj);
+	                	}
+	                }else {
+                    	System.out.println("O pesquisador inserido não está cadastrado no sistema");
+                    }
+	               
+	                break;
 
-				case 7:
+				case 9:
 					entrada.nextLine();
 					for(int i=0 ; i<dados.getProjetos().size() ; i++) {
 						if(dados.getProj(i).Data()) {
@@ -221,18 +278,34 @@ public class InterfaceDeUsuario{
 						}
 					}
 				
-				break;
-
-
+					break;
+				case 10:
+					entrada.nextLine();
+					System.out.println("Insira o nome da instituicao");
+					nome = entrada.nextLine();
+					for(int i=0; i<dados.getInstituicoes().size();i++) {
+						if(dados.getInsti(i).getNome().equalsIgnoreCase(nome)) {
+							ArrayList<Financiamento> fs = dados.getInsti(i).getF();
+							for(Financiamento f : fs) {
+								System.out.println("Descricao: " + f.getDescricao());
+								System.out.println("Valor: " + f.getValor());
+							}
+						}
+					}
 			}
+			System.out.println();
 			System.out.println("0. Sair.");
 			System.out.println("1. Cadastrar pesquisador.");
 			System.out.println("2. Cadastrar projeto.");
 			System.out.println("3. Cadastrar artigo.");
-			System.out.println("4. Listar pesquisadores de uma universidade.");
-			System.out.println("5. Listar autores de um artigo.");
-			System.out.println("6. Listar projetos de um autor.");
-			System.out.println("7. Listar projetos ja finalizados.");
+			System.out.println("4. Cadastrar instituicao");
+			System.out.println("5. Cadastrar financiamento");
+			System.out.println("6. Listar pesquisadores de uma universidade.");
+			System.out.println("7. Listar autores de um artigo.");
+			System.out.println("8. Listar projetos de um autor.");
+			System.out.println("9. Listar projetos ja finalizados.");
+			System.out.println("10. Listar financiamentos de uma instituicao");
+				
 				
 			opcao = entrada.nextInt();
 		}

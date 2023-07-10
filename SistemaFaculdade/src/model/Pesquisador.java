@@ -16,6 +16,8 @@ public class Pesquisador implements Serializable{
 	private ArrayList<Projeto> projetos = new ArrayList<>();
 
 	private ArrayList<Artigo> artigos = new ArrayList<>();
+	
+	private ArrayList<Financiamento> financiamentos = new ArrayList<>();
 
 	public String getUniversidade() {
 		return universidade;
@@ -47,6 +49,9 @@ public class Pesquisador implements Serializable{
 
 	public void addArtigo(Artigo artigo) {
 		artigos.add(artigo);
+	}
+	public void addFinanciamneto(Financiamento f) {
+		financiamentos.add(f);
 	}
 
 	public Pesquisador(String nome, String area, String universidade) {

@@ -16,6 +16,9 @@ public class Dados implements Serializable{
 
 	private ArrayList<Artigo> artigos = new ArrayList<>();
 	private Artigo artigo;
+	
+	private ArrayList<Instituicao> instituicoes = new ArrayList<>();
+	
 
 	public void carregaDados() {
 
@@ -126,5 +129,20 @@ public class Dados implements Serializable{
 	}
 	public Projeto getProj(int i) {
 		return projetos.get(i);
+	}
+	public Instituicao getInsti(int i) {
+		return instituicoes.get(i);
+	}
+
+	public ArrayList<Instituicao> getInstituicoes() {
+		return instituicoes;
+	}
+
+	public void setInstituicoes(ArrayList<Instituicao> instituicoes) {
+		this.instituicoes = instituicoes;
+	}
+	
+	public void addInstituicoes(Instituicao i) {
+		instituicoes.add(i);
 	}
 }
